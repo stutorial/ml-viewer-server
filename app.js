@@ -1,7 +1,12 @@
 var express = require('express');
+var jsonfile = require('jsonfile')
+
 var app = express();
 
-var products = ["HyperX Cloud 2", "Geforce 1080"];
+var file = './data.json';
+var products = {products: ["HyperX Cloud 2", "Geforce 1080"]}
+
+jsonfile.writeFileSync(file, products, {spaces: 2})
 
 app.get('/products', function (req, res) {
 
@@ -20,7 +25,7 @@ app.get('/products', function (req, res) {
   // to the API (e.g. in case you use sessions)
   res.setHeader('Access-Control-Allow-Credentials', true);
 
-  res.json(products);
+  res.json(jsonfile.readFileSync(file).products);
 });
 
 app.listen(3001, function () {
