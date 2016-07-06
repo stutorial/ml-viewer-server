@@ -1,32 +1,38 @@
-var express = require('express');
+var app = require('express')();
+var bodyParser = require('body-parser');
 var jsonfile = require('jsonfile')
 
-var app = express();
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3333");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 var file = './data.json';
-var products = {products: ["HyperX Cloud 2", "Geforce 1080"]}
-
-jsonfile.writeFileSync(file, products, {spaces: 2})
 
 app.get('/products', function (req, res) {
-
-  // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3333');
-
-  // Request methods you wish to allow
-  res.setHeader('Access-Control-Allow-Methods'
-    , 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-  // Request headers you wish to allow
-  res.setHeader('Access-Control-Allow-Headers'
-    , 'X-Requested-With,content-type');
-
-  // Set to true if you need the website to include cookies in the requests sent
-  // to the API (e.g. in case you use sessions)
-  res.setHeader('Access-Control-Allow-Credentials', true);
-
-  res.json(jsonfile.readFileSync(file).products);
+  res.json(getProducts());
 });
+
+app.post('/products', function (req, res) {
+  var product_name = req.body.name;
+  console.log(product_name);
+  var db_final = createProduct(product_name);
+  res.json(db_final);
+});
+
+var getProducts = function() {
+  return jsonfile.readFileSync(file);
+}
+
+var createProduct = function(product_name) {
+  var db_actual = jsonfile.readFileSync(file);
+  var db_new = db_actual.concat([product_name]);
+  jsonfile.writeFileSync(file, db_new, {spaces: 2});
+  return db_new;
+}
 
 app.listen(3001, function () {
   console.log("Listening on port 3001");

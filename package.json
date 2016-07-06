@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/stutorial/ml-viewer-server#readme",
   "dependencies": {
+    "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "jsonfile": "^2.3.1"
   }
