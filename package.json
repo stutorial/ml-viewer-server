@@ -1,0 +1,22 @@
+{
+  "name": "ml-viewer-server",
+  "version": "1.0.0",
+  "description": "Un servidor para el ml-viewer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stutorial/ml-viewer-server.git"
+  },
+  "author": "Santiago Perez Torre",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stutorial/ml-viewer-server/issues"
+  },
+  "homepage": "https://github.com/stutorial/ml-viewer-server#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
