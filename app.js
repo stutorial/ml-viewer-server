@@ -10,7 +10,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-var file = './data.json';
+var file = './data-dev.json';
 
 app.get('/products', function (req, res) {
   res.json(getProducts());
@@ -19,8 +19,10 @@ app.get('/products', function (req, res) {
 app.post('/products', function (req, res) {
   var product_name = req.body.name;
   console.log(product_name);
-  var db_final = createProduct(product_name);
-  res.json(db_final);
+  var result = createProduct(product_name);
+  result ?
+    res.status(201).send("Agregado el nuevo producto") :
+    res.status(400).send("Nombre invalido");
 });
 
 var getProducts = function() {
@@ -29,9 +31,10 @@ var getProducts = function() {
 
 var createProduct = function(product_name) {
   var db_actual = jsonfile.readFileSync(file);
+  if (product_name === undefined || product_name === "") return false;
   var db_new = db_actual.concat([product_name]);
   jsonfile.writeFileSync(file, db_new, {spaces: 2});
-  return db_new;
+  return true;
 }
 
 app.listen(3001, function () {
