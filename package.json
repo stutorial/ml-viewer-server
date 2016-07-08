@@ -18,6 +18,7 @@
   "homepage": "https://github.com/stutorial/ml-viewer-server#readme",
   "dependencies": {
     "body-parser": "^1.15.2",
+    "diskdb": "^0.1.15",
     "express": "^4.14.0",
     "jsonfile": "^2.3.1"
   }
